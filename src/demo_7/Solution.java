@@ -8,7 +8,6 @@ public class Solution {
         System.out.println(reverse(123));
     }
 
-
     //    public int reverse(int x) {
     //        int rev = 0;
     //        while (x != 0) {
