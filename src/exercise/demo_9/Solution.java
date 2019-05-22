@@ -1,4 +1,4 @@
-package demo_9;
+package exercise.demo_9;
 
 
 import org.junit.Test;
