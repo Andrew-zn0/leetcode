@@ -7,16 +7,15 @@ package sort;
  */
 public class Bubble {
     public static void main(String[] args) {
-        int[] a = {2, 1, 4, 6, 7};
+        int[] a = {2, 4, 5, 6, 7, 3, 8};
         sort(a);
         show(a);
     }
 
-
     private static void sort(int[] a) {
         int temp;
         for (int i = 0; i < a.length - 1; i++) {
-            for (int j = 0; i < a.length - i; i++) {
+            for (int j = 0; j < a.length - 1; j++) {
                 if (a[j] > a[j + 1]) {
                     temp = a[j + 1];
                     a[j + 1] = a[j];
