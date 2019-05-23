@@ -3,11 +3,6 @@ package exercise.demo_9;
 
 import org.junit.Test;
 
-
-
-
-
-
 public class Solution {
 
     @Test
