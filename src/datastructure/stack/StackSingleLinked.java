@@ -22,7 +22,6 @@ public class StackSingleLinked implements Stack {
         size = 0;
     }
 
-
     @Override
     public int getSize() {
         return size;
