@@ -1,4 +1,4 @@
-package datastructure.recursive;
+package algorithms.recursive;
 
 import org.junit.Test;
 

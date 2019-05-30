@@ -1,5 +1,5 @@
 
-package sort;
+package algorithms.sort;
 
 /**
  * @author Jay
