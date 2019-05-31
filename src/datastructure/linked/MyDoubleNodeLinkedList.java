@@ -3,7 +3,6 @@ package datastructure.linked;
 import datastructure.list.OutOfBoundaryException;
 
 
-
 /**
  * @author Jay
  * @description 基于双链表的链接表实现
@@ -156,8 +155,6 @@ public class MyDoubleNodeLinkedList implements LinkedList {
 
     @Override
     public Object removeFirst() throws OutOfBoundaryException {
-
-
         return remove(head.getNext());
     }
 
@@ -176,6 +173,6 @@ public class MyDoubleNodeLinkedList implements LinkedList {
 
     @Override
     public Iterator elements() {
-         return new LinkedListIterator(this);
+        return new LinkedListIterator(this);
     }
 }
