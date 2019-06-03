@@ -134,5 +134,5 @@ public interface LinkedList {
      *
      * @return
      */
-    datastructure.linked.Iterator elements();
+    Iterator elements();
 }
