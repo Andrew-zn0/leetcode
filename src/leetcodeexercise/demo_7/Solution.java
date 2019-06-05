@@ -1,4 +1,4 @@
-package exercise.demo_7;
+package leetcodeexercise.demo_7;
 
 import org.junit.Test;
 
