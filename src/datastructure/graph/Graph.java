@@ -17,7 +17,7 @@ public interface Graph {
      */
     int UNDIRECTED_GRAPH = 0;
     /**
-     * 有向图
+     *  有向图
      */
     int DIRECTED_GRAPH = 1;
 
