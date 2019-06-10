@@ -114,7 +114,7 @@ public interface Graph {
     Iterator BFSTraverse(Vertex v);
 
     /**
-     * 求顶点 v 到其他顶点的最短路径
+     * 求顶点v到其他顶点的最短路径
      *
      * @param v
      * @return
