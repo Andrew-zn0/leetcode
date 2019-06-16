@@ -190,7 +190,8 @@ public class Order {
             if (!s.isEmpty()) {
                 p = (BinTreeNode) s.pop();
                 list.insertLast(p);
-                p.getrChild();
+                // 转向根的右子节点遍历
+                p = p.getrChild();
             }
         }
     }
