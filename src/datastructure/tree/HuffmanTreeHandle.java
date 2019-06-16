@@ -69,7 +69,7 @@ public class HuffmanTreeHandle {
 
             if (root.isLChild()) {
                 root.setCoding(root.getParent().getCoding() + "0");
-                
+
             } else {
                 root.setCoding(root.getParent().getCoding() + "1");
             }
