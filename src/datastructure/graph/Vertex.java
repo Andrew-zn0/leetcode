@@ -120,6 +120,7 @@ public class Vertex {
     }
 
     public LinkedList getReAdjacentEdges() {
+
         if (isUnDiGraphNode()) {
             // 无向图顶点的逆邻接边表就是其邻接边表
             return adjacentEdges;
