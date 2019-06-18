@@ -65,6 +65,11 @@ public abstract class AbstractGraph implements Graph {
 
 
     protected void resetVexStatus() {
+
+    }
+
+    protected void resetEdgeType() {
+
     }
 
     /**
