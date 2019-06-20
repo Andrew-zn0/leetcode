@@ -167,11 +167,9 @@ public class UndirectedGraph extends AbstractGraph {
         // 初始化顶点集合 S 到 V-S 各顶点的最短横切边
         for (it.first(); !it.isDone(); it.next()) {
             Vertex u = (Vertex) it.currentItem();
-
             Edge e = edgeFromTo(v, u);
             // 设置到达 V-S 中顶点 u 的最短横切边
             setCrossEdge(u, e);
-
         }
         // 进行|V|-1 次循环找到|V|-1 条边
         for (int t = 1; t < getVexNum(); t++) {
@@ -196,8 +194,6 @@ public class UndirectedGraph extends AbstractGraph {
                 }
             }
         }
-
-
     }
 
     private int getCrossWeight(Vertex v) {
