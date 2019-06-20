@@ -1,6 +1,8 @@
 package datastructure.graph;
 
 import datastructure.linked.Iterator;
+import datastructure.linked.LinkedList;
+import datastructure.linked.MyDoubleNodeLinkedList;
 import datastructure.linked.Node;
 
 /**
@@ -71,13 +73,76 @@ public class UndirectedGraph extends AbstractGraph {
         return null;
     }
 
+
     @Override
     public Iterator BFSTraverse(Vertex v) {
         return null;
     }
 
+    /**
+     * 取或设置顶点 v 的当前最短距离
+     *
+     * @param v
+     * @return
+     */
+    protected int getDistance(Vertex v) {
+        return ((Path) v.getAppObj()).getDistance();
+    }
+
+    protected void setDistance(Vertex v, int dis) {
+        ((Path) v.getAppObj()).setDistance(dis);
+    }
+
+    /**
+     * 取或设置顶点 v 的当前最短路径
+     *
+     * @param v
+     * @return
+     */
+    protected Path getPath(Vertex v) {
+        return (Path) v.getAppObj();
+    }
+
+    protected void setPath(Vertex v, Path p) {
+        v.setAppObj(p);
+    }
+
+    /**
+     * Dijkstra 算法
+     * 输入：顶点 v
+     * 输出：v 到其他顶点的最短路径
+     *
+     * @param v
+     * @return
+     */
     @Override
     public Iterator shortestPath(Vertex v) {
+        // 所有的最短路径序列
+        LinkedList sPath = new MyDoubleNodeLinkedList();
+        // 重置图中所有顶点的信息
+        resetVexStatus();
+        // 初始化，将 v 到各顶点的最短距离初始化为由 v 直接可达的距离
+        Iterator it = getVertex();
+        for (it.first(); !it.isDone(); it.next()) {
+            Vertex u = (Vertex) it.currentItem();
+            int weight = Integer.MAX_VALUE;
+            Edge e = edgeFromTo(v, u);
+            if (e != null) {
+                weight = e.getWeight();
+            }
+            if (u == v) {
+                weight = 0;
+            }
+            Path p = new Path(weight, v, u);
+            setPath(u, p);
+        }
+        // 顶点 v 进入集合 S
+        v.setToVisited();
+        // 求得的最短路径进入链接表
+        sPath.insertLast(getPath(v));
+
+
+
         return null;
     }
 
@@ -145,7 +210,7 @@ public class UndirectedGraph extends AbstractGraph {
     }
 
     /**
-     *  查找轻边在 V-S 中的顶点
+     * 查找轻边在 V-S 中的顶点
      */
     private Vertex selectMinVertex(Iterator it) {
 
