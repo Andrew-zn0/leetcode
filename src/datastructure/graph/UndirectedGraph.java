@@ -109,10 +109,13 @@ public class UndirectedGraph extends AbstractGraph {
 
     /**
      * Dijkstra 算法
-     * 有权图的最短路径
+     * 有权图的单源最短路径
      * 输入：顶点 v
      * 输出：v 到其他顶点的最短路径
      * 到其他顶点的最短路径包括到各顶点的最短距离
+     * <p>
+     * Floyd
+     * 任意顶点间的最短路径
      *
      * @param v
      * @return
