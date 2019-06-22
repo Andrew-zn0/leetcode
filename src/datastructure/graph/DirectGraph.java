@@ -1,7 +1,11 @@
 package datastructure.graph;
 
 import datastructure.linked.Iterator;
+import datastructure.linked.LinkedList;
+import datastructure.linked.MyDoubleNodeLinkedList;
 import datastructure.linked.Node;
+import datastructure.stack.Stack;
+import datastructure.stack.StackSingleLinked;
 
 /**
  * @author Jay
@@ -79,9 +83,64 @@ public class DirectGraph extends AbstractGraph {
 
     }
 
+    /**
+     * 输入：AOV 网络
+     * 输出：拓扑序列
+     *
+     * @return
+     * @throws UnsupportedOperation
+     */
     @Override
     public Iterator toplogicalSort() throws UnsupportedOperation {
-        return null;
+        // 拓扑序列
+        LinkedList topSeq = new MyDoubleNodeLinkedList();
+        Stack s = new StackSingleLinked();
+        Iterator it = getVertex();
+        // 初始化顶点集应用信息
+        for (it.first(); !it.isDone(); it.next()) {
+            Vertex v = (Vertex) it.currentItem();
+            v.setAppObj(Integer.valueOf(v.getInDeg()));
+            if (v.getInDeg() == 0) {
+                s.push(v);
+            }
+        }
+
+        while (!s.isEmpty()) {
+
+            Vertex v = (Vertex) s.pop();
+            // 生成拓扑排序
+            topSeq.insertLast(v);
+            // 对于 v 的每个邻接点入度减 1
+            Iterator adjIt = adjVertexs(v);
+            for (adjIt.first(); !adjIt.isDone(); adjIt.next()) {
+                Vertex adjV = (Vertex) adjIt.currentItem();
+                int in = getTopInDe(adjV) - 1;
+                setTopInDe(adjV, in);
+                // 入度为0的顶点入栈
+                if (in == 0) {
+                    s.push(adjV);
+                }
+            }
+
+        }
+
+        if (topSeq.getSize() < getVexNum()) {
+            return null;
+        } else {
+            return topSeq.elements();
+        }
+    }
+
+    /**
+     * @param v
+     * @param in
+     */
+    private void setTopInDe(Vertex v, int in) {
+
+    }
+
+    private int getTopInDe(Vertex v) {
+        return 0;
     }
 
     @Override
