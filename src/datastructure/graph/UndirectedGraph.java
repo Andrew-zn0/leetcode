@@ -202,6 +202,9 @@ public class UndirectedGraph extends AbstractGraph {
      * Prim 算法
      * 输入：无向连通带权图
      * 输出：构造最小生成树
+     * <p>
+     * 算法原理:
+     * 依次找到每个顶点权值最小的邻接点
      *
      * @throws UnsupportedOperation
      */
