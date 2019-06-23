@@ -1,4 +1,4 @@
-package algorithms.seek;
+package algorithms.search;
 
 
 import datastructure.linked.Iterator;

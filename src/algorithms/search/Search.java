@@ -1,4 +1,8 @@
-package algorithms.seek;
+package algorithms.search;
+
+import datastructure.linked.Node;
+import datastructure.list.Strategy;
+import datastructure.tree.BinTreeNode;
 
 /**
  * @author Jay
@@ -6,6 +10,8 @@ package algorithms.seek;
  * @date Created in 2019/6/22 14:30
  */
 public class Search {
+
+
     /**
      * 折半查找
      * 适用于有序表
@@ -29,5 +35,4 @@ public class Search {
         }
         return -1;
     }
-
 }
