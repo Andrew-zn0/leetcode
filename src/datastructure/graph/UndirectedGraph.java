@@ -109,8 +109,13 @@ public class UndirectedGraph extends AbstractGraph {
 
     /**
      * Dijkstra 算法
+     * 有权图的单源最短路径
      * 输入：顶点 v
      * 输出：v 到其他顶点的最短路径
+     * 到其他顶点的最短路径包括到各顶点的最短距离
+     * <p>
+     * Floyd
+     * 任意顶点间的最短路径
      *
      * @param v
      * @return
@@ -138,20 +143,68 @@ public class UndirectedGraph extends AbstractGraph {
         }
         // 顶点 v 进入集合 S
         v.setToVisited();
-        // 求得的最短路径进入链接表
+        // 求得顶点V的最短路径进入链接表
         sPath.insertLast(getPath(v));
+        // 进行|V|-1 次循环找到|V|-1 条最短路径
+        for (int t = 1; t < getVexNum(); t++) {
+            // 找 V-S 中 distance 最小的点 k
+            Vertex k = selectMin(it);
+            // 顶点路径加入S
+            k.setToVisited();
+            // 求得的最短路径加入连接表
+            sPath.insertLast(getPath(k));
+            // 修正V-S中顶点当前最短路径
+            int distK = getDistance(k);
+            // 取出k的所有邻接点
+            Iterator adjIt = adjVertexs(k);
+            for (adjIt.first(); !adjIt.isDone(); adjIt.next()) {
+                //k 的邻接点 adjV
+                Vertex adjV = (Vertex) adjIt.currentItem();
+                Edge e = edgeFromTo(k, adjV);
+                // 发现更短的路径
+                if ((long) distK + (long) e.getWeight() < (long) getDistance(adjV)) {
+                    setDistance(adjV, distK + e.getWeight());
+                    // 以 k 的路径信息修改 adjV 的路径信息
+                    amendPathInfo(k, adjV);
+
+                }
+            }
+
+        }
+        return sPath.elements();
+
+    }
+
+    private void amendPathInfo(Vertex k, Vertex adjV) {
 
 
+    }
 
-
-
-        return null;
+    private Vertex selectMin(Iterator it) {
+        Vertex min = null;
+        for (it.first(); !it.isDone(); it.next()) {
+            Vertex v = (Vertex) it.currentItem();
+            if (!v.isVisited()) {
+                min = v;
+                break;
+            }
+        }
+        for (; !it.isDone(); it.next()) {
+            Vertex v = (Vertex) it.currentItem();
+            if (!v.isVisited() && getDistance(v) < getDistance(min)) {
+                min = v;
+            }
+        }
+        return min;
     }
 
     /**
      * Prim 算法
      * 输入：无向连通带权图
      * 输出：构造最小生成树
+     * <p>
+     * 算法原理:
+     * 依次找到每个顶点权值最小的邻接点
      *
      * @throws UnsupportedOperation
      */

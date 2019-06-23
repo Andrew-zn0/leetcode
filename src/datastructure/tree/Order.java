@@ -3,6 +3,7 @@ package datastructure.tree;
 import datastructure.linked.Iterator;
 import datastructure.linked.LinkedList;
 import datastructure.linked.MyDoubleNodeLinkedList;
+import datastructure.linked.Node;
 import datastructure.list.Strategy;
 import datastructure.queue.Queue;
 import datastructure.queue.QueueArray;
@@ -240,6 +241,4 @@ public class Order {
         preOrderRecursion(root.getlChild(), list);
         preOrderRecursion(root.getrChild(), list);
     }
-
-
 }
