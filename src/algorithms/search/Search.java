@@ -1,8 +1,5 @@
 package algorithms.search;
 
-import datastructure.linked.Node;
-import datastructure.list.Strategy;
-import datastructure.tree.BinTreeNode;
 
 /**
  * @author Jay

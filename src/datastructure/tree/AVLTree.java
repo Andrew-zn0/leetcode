@@ -185,6 +185,12 @@ public class AVLTree {
     /**
      * 输入：待删除元素 ele
      * 输出：在二叉查找树中删除 ele
+     * <p>
+     * 算法分析:
+     * 1.若被删除节点无左右子树,直接删除
+     * 2.若被删除节点有右子树或者左子树,删除节点,子树节点代替其位置.
+     * 3.若被删除节点有右子树并且有左子树,找到其前驱元素,代替节点位置,
+     * 其前驱元素继续根据1,2,3步骤判断,直到结束.
      *
      * @param ele
      * @return
@@ -203,7 +209,6 @@ public class AVLTree {
         if (!v.hasLChild() || !v.hasRChild()) {
             del = v;
         } else {
-
             del = getPredecessor(v);
             Object old = v.getData();
             v.setData(del.getData());
@@ -239,4 +244,61 @@ public class AVLTree {
         return del.getData();
     }
 
+    /**
+     * 输入：失衡的结点 z
+     * 输出：平衡后子树的根结点
+     * <p>
+     * 四种原因:
+     * 1.  失衡是由于 g 的左孩子的左子树过高造成的；
+     * 2.  失衡是由于 g 的右孩子的右子树过高造成的；
+     * 3.  失衡是由于 g 的左孩子的右子树过高造成的；
+     * 4.  失衡是由于 g 的右孩子的左子树过高造成的。
+     * <p>
+     * 旋转操作的统一实现方法
+     *
+     * @param z
+     * @return
+     */
+    private BinTreeNode rotate(BinTreeNode z) {
+        // 取 y 为 z 更高的孩子
+        BinTreeNode y = higherSubT(z);
+        // x 为 y 更高的孩子
+        BinTreeNode x = higherSubT(y);
+        // 记录: z 是否左孩子
+        boolean isLeft = z.isLChild();
+        // p为z的父节点
+        BinTreeNode p = z.getParent();
+        // 自左向右，三个节点
+        BinTreeNode a, b, c;
+        // 自左向右，四棵子树
+        BinTreeNode t0, t1, t2, t3;
+        
+
+    }
+
+    /**
+     * 返回结点 v 较高的子树
+     *
+     * @param v
+     * @return
+     */
+    private BinTreeNode higherSubT(BinTreeNode v) {
+        if (v == null) {
+            return null;
+        }
+        int lH = (v.hasLChild()) ? (v.getlChild().getHeight()) : -1;
+        int rH = (v.hasRChild()) ? (v.getrChild().getHeight()) : -1;
+        if (lH > rH) {
+            return v.getlChild();
+        }
+        if (rH > lH) {
+            return v.getrChild();
+        }
+        if (v.isLChild()) {
+            return v.getlChild();
+
+        } else {
+            return v.getrChild();
+        }
+    }
 }
