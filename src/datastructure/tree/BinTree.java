@@ -8,13 +8,13 @@ import datastructure.list.Strategy;
  * @description
  * @date Created in 2019/6/23 14:32
  */
-public class AVLTree {
+public class BinTree {
 
-    private BinTreeNode root;
+    protected BinTreeNode root;
     /**
      * 平衡节点
      */
-    private BinTreeNode startBN;
+    protected BinTreeNode startBN;
     private Strategy strategy;
 
     /**
@@ -259,7 +259,7 @@ public class AVLTree {
      * @param z
      * @return
      */
-    private BinTreeNode rotate(BinTreeNode z) {
+    protected BinTreeNode rotate(BinTreeNode z) {
         // 取 y 为 z 更高的孩子
         BinTreeNode y = higherSubT(z);
         // x 为 y 更高的孩子
@@ -380,14 +380,4 @@ public class AVLTree {
     }
 
 
-    /**
-     * @param ele
-     */
-    public void insert(Object ele) {
-        root = reBalance(startBN);
-    }
-
-    private BinTreeNode reBalance(BinTreeNode startBN) {
-        return null;
-    }
 }
