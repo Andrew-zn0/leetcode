@@ -333,7 +333,6 @@ public class BinTree {
         if (t3 != null) {
             t3.sever();
         }
-
         // 重新链接
         a.setLChild(t0);
         a.setRChild(t1);
@@ -378,6 +377,4 @@ public class BinTree {
             return v.getrChild();
         }
     }
-
-
 }
