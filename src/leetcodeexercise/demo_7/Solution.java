@@ -2,10 +2,23 @@ package leetcodeexercise.demo_7;
 
 import org.junit.Test;
 
+
 public class Solution {
     @Test
     public void test() {
-        System.out.println(reverse(123));
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000000; i++) {
+            reverse(1234567890);
+        }
+
+        long l = System.currentTimeMillis();
+        for (int i = 0; i < 10000000; i++) {
+            reverse1(1234567890);
+        }
+
+        long l1 = System.currentTimeMillis();
+
+        System.out.println("字符串处理:" + (l - start) + "\n数值处理:" + (l1 - l));
     }
 
     public int reverse1(int x) {
