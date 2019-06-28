@@ -19,6 +19,7 @@ public class Sorter {
         for (int i = 0; i < 10000000; i++) {
 
             insertSort(a, 0, a.length - 1);
+            myInsertSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -49,6 +50,20 @@ public class Sorter {
             }
         }
     }
+
+    private void myInsertSort(int[] r, int low, int high) {
+
+        for (int i = low + 1; i <= high; i++) {
+            if (r[i - 1] > r[i]) {
+                int temp = r[i];
+                r[i] = r[i - 1];
+             
+
+            }
+        }
+
+    }
+
 
     private void print(int[] a) {
         for (int i : a) {
