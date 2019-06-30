@@ -28,7 +28,8 @@ public class Sorter {
             //binInsertSort(a, 0, a.length - 1);
             //shellSort(a, 0, a.length - 1);
             //bubbleSort(a, 0, a.length - 1);
-            quickSort(a, 0, a.length - 1);
+            //quickSort(a, 0, a.length - 1);
+            selectSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -243,6 +244,14 @@ public class Sorter {
 
     }
 
+    /**
+     * 递归
+     *
+     * @param r
+     * @param low
+     * @param high
+     * @return
+     */
     private int partition(int[] r, int low, int high) {
         // 作为枢轴元素
         int pivot = r[low];
@@ -263,5 +272,30 @@ public class Sorter {
         r[low] = pivot;
         // 返回枢轴元素位置
         return low;
+    }
+
+    /**
+     * 简单选择排序
+     *
+     * @param r
+     * @param low
+     * @param high
+     */
+    private void selectSort(int[] r, int low, int high) {
+        for (int k = low; k < high - 1; k++) {
+            int min = k;
+
+            for (int i = min + 1; i <= high; i++) {
+                if (r[i] < r[min]) {
+                    min = i;
+                }
+                if (k != min) {
+                    // 关键字最小的元素与元素 r[k]交换
+                    int temp = r[k];
+                    r[k] = r[min];
+                    r[min] = temp;
+                }
+            }
+        }
     }
 }
