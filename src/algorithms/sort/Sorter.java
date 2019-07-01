@@ -30,7 +30,8 @@ public class Sorter {
             //bubbleSort(a, 0, a.length - 1);
             //quickSort(a, 0, a.length - 1);
             //selectSort(a, 0, a.length - 1);
-            heapSort(a, 0, a.length - 1);
+            //heapSort(a, 0, a.length - 1);
+            mergeSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -405,7 +406,7 @@ public class Sorter {
      * @param low
      * @param high
      */
-    public void heapSort(int[] r, int low, int high) {
+    private void heapSort(int[] r, int low, int high) {
         // 初始化建堆
         for (int i = r.length / 2; i >= 0; i--) {
             heapAdjust(r, i, high + 1);
@@ -419,6 +420,42 @@ public class Sorter {
             // 调整
             heapAdjust(r, 0, i - 1);
         }
+    }
+
+    /**
+     * 归并排序(分治法)
+     *
+     * @param r
+     * @param low
+     * @param high
+     */
+    private void mergeSort(int[] r, int low, int high) {
+
+        if (low < high) {
+            mergeSort(r, low, (high + low) / 2);
+            mergeSort(r, (high + low) / 2 + 1, high);
+            merge(r, low, (high + low) / 2, high);
+        }
+    }
+
+    /**
+     * 输入：数据元素数组 a，a 待合并的两个有序区间[p..q]以及[q+1..r]
+     * 输出：将两个有序区间合并为一个有序区间
+     *
+     * @param r
+     * @param p
+     * @param q
+     * @param a
+     */
+    private void merge(int[] a, int p, int q, int r) {
+        int[] b = new int[r - p + 1];
+        int s= p;
+        int t=q+1;
+        int k=0;
+        while(s<=){
+
+        }
+
     }
 
 
