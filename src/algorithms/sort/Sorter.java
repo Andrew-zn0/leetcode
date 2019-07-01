@@ -29,7 +29,8 @@ public class Sorter {
             //shellSort(a, 0, a.length - 1);
             //bubbleSort(a, 0, a.length - 1);
             //quickSort(a, 0, a.length - 1);
-            selectSort(a, 0, a.length - 1);
+            //selectSort(a, 0, a.length - 1);
+            heapSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -295,6 +296,24 @@ public class Sorter {
      * 元素需要 n-2 次比较……，在此过程中每次选择关键字最小的元素都没有利用以前比较操作
      * 得到的结果。欲降低比较操作的次数，则需要把以前比较的结果记录下来，由此得到一种改
      * 进的选择类排序算法，即树型选择排序
+     * <p>
+     * 树型选择排序
+     * <p>
+     * 基本思想:
+     * <p>
+     * 先把待排序的n个元素两两进行比较，
+     * 取出较小者，若轮空则直接进入下一轮比较；然后在⎡n/2⎤个较小者中，采用同样的方法进行
+     * 比较，再选出较小者；如此反复，直到选出关键字最小的元素为止。这个过程可以使用一颗
+     * 具有n个结点的完全二叉树来表示，最终选出的关键字最小的元素就是这棵二叉树的根结点。
+     * <p>
+     * 在输出关键字最小的元素后，为选 出次小关键字，可以将最小关键字元素所对应的叶
+     * 子结点的关键字设置为∞，然后从该叶子结点起逆行向上，将所经过的结点与
+     * 其兄弟进行比较，修改从该叶子结点到根结点上各结点的值，则根结点的值即
+     * 为次小关键字.
+     * <p>
+     * 时间效率:Ο(n log n)
+     * <p>
+     * 空间效率:n-1
      *
      * @param r
      * @param low
@@ -303,7 +322,6 @@ public class Sorter {
     private void selectSort(int[] r, int low, int high) {
         for (int k = low; k < high - 1; k++) {
             int min = k;
-
             for (int i = min + 1; i <= high; i++) {
                 if (r[i] < r[min]) {
                     min = i;
@@ -318,6 +336,84 @@ public class Sorter {
         }
     }
 
+    /**
+     * 元素筛选过程
+     *
+     * @param arr
+     * @param index
+     * @param length
+     */
+    private void heapAdjust(int[] arr, int index, int length) {
+        // 左子节点下标
+        int leftChild = 2 * index + 1;
+        // 右子节点下标
+        int rightChild = 2 * index + 2;
+        // 要调整的节点下标
+        int present = index;
+
+        // 下沉左边
+        if (leftChild < length && arr[leftChild] > arr[present]) {
+            present = leftChild;
+        }
+        // 下沉右边
+        if (rightChild < length && arr[rightChild] > arr[present]) {
+            present = rightChild;
+        }
+        // 如果下标不相等 证明调换过了
+        if (present != index) {
+            // 交换值
+            int temp = arr[index];
+            arr[index] = arr[present];
+            arr[present] = temp;
+            // 继续下沉
+            heapAdjust(arr, present, length);
+        }
+
+    }
+
+    /**
+     * 堆排序
+     * <p>
+     * 大顶堆
+     * <p>
+     * 基本思想:
+     * <p>
+     * 设有 n 个元素，欲将其按关键字排序。可以首先将这 n 个元素按关键字建成堆，将堆顶
+     * 元素输出，得到 n 个元素中关键字最大（或最小）的元素。然后，再将剩下的 n-1 个元素重
+     * 新建成堆，再输出堆顶元素，得到 n 个元素中关键字次大（或次小）的元素
+     * <p>
+     * 执行过程:
+     * <p>
+     * 设有一个具有 m 个元素的堆，输出堆顶元素后，剩下 m-1 个元素。具体的调整方法是：
+     * 首先，将堆底元素（最后一个元素）送入堆顶，此时堆被破坏，其原因仅是根结点不满足堆
+     * 的性质，而根结点的左右子树仍是堆。然后，将根结点与左、右子女中较大（或较小）的进
+     * 行交换。若与左孩子交换，则左子树堆被破坏，且仅左子树的根结点不满足堆的性质；若与
+     * 右孩子交换，则右子树堆被破坏，且仅右子树的根结点不满足堆的性质。继续对不满足堆性
+     * 质的子树进行上述交换操作，直到叶子结点，则堆被重建。
+     * <p>
+     * 空间效率:1
+     * <p>
+     * 时间效率: Ο(n log n)
+     *
+     * @param r
+     * @param low
+     * @param high
+     */
+    public void heapSort(int[] r, int low, int high) {
+        // 初始化建堆
+        for (int i = r.length / 2; i >= 0; i--) {
+            heapAdjust(r, i, high + 1);
+        }
+        // 不断输出堆顶元素并调整 r[0..i-1]为新堆
+        for (int i = high; i > 0; i--) {
+            // 交换堆顶与堆底元素
+            int temp = r[0];
+            r[0] = r[i];
+            r[i] = temp;
+            // 调整
+            heapAdjust(r, 0, i - 1);
+        }
+    }
 
 
 }
