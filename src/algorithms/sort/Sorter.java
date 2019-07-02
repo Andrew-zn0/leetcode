@@ -31,7 +31,8 @@ public class Sorter {
             //quickSort(a, 0, a.length - 1);
             //selectSort(a, 0, a.length - 1);
             //heapSort(a, 0, a.length - 1);
-            mergeSort(a, 0, a.length - 1);
+            //mergeSort(a, 0, a.length - 1);
+            countSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -488,4 +489,52 @@ public class Sorter {
             a[p + i] = b[i];
         }
     }
+
+    /**
+     * 计数排序
+     * <p>
+     * 时间效率: O(n)
+     * <p>
+     * 空间效率:最大元素值大小
+     * <p>
+     * 算法过程:
+     * 1.找到元素中最大元素max
+     * 2.开辟数组arr[max]
+     * 3.将元素对应下标入组,然后遍历取出
+     * <p>
+     * 由于空间浪费较大
+     * 计数排序只适用于正整数并且取值范围相差不大的数组排序使用，它的排序的速度是非常可观的。
+     *
+     * @param r
+     * @param low
+     * @param high
+     */
+    private void countSort(int[] r, int low, int high) {
+        // 找出最大值
+        int max = r[0];
+        for (int i = 1; i <= high; i++) {
+            if (r[i] > max) {
+                max = r[i];
+            }
+        }
+        // 初始化数组
+        int[] countArr = new int[max + 1];
+        // 计数
+        for (int i = 0; i <= high; i++) {
+            countArr[r[i]]++;
+            r[i] = 0;
+        }
+        // 排序
+        int index = 0;
+        for (int i = 0; i < countArr.length; i++) {
+            while (countArr[i] > 0) {
+                r[index++] = i;
+                countArr[i]--;
+            }
+        }
+    }
+
+
+
+    
 }
