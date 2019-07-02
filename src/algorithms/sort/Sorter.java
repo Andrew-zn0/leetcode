@@ -3,6 +3,10 @@ package algorithms.sort;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * @author Jay
@@ -32,7 +36,8 @@ public class Sorter {
             //selectSort(a, 0, a.length - 1);
             //heapSort(a, 0, a.length - 1);
             //mergeSort(a, 0, a.length - 1);
-            countSort(a, 0, a.length - 1);
+            //countSort(a, 0, a.length - 1);
+            bucketSort(a, 0, a.length - 1);
         }
         print(a);
         long l = System.currentTimeMillis();
@@ -434,9 +439,9 @@ public class Sorter {
      * <p>
      * 操作步骤：
      * <p>
-     * 1.  划分：将待排序的序列划分为大小相等（或大致相等）的两个子序列；
-     * 2.  治理：当子序列的规模大于 1 时，递归排序子序列，如果子序列规模为 1 则成为有序序列；
-     * 3.  组合：将两个有序的子序列合并为一个有序序列。
+     * 1.划分：将待排序的序列划分为大小相等（或大致相等）的两个子序列；
+     * 2.治理：当子序列的规模大于 1 时，递归排序子序列，如果子序列规模为 1 则成为有序序列；
+     * 3.组合：将两个有序的子序列合并为一个有序序列。
      * <p>
      * 时间效率：Ο(n log n)。
      * <p>
@@ -534,7 +539,65 @@ public class Sorter {
         }
     }
 
-
-
-    
+    /**
+     * 桶排序
+     * <p>
+     * 基本思想:
+     * 桶排序可以看成是计数排序的升级版，它将要排的数据分到多个有序的桶里，
+     * 每个桶里的数据再单独排序，再把每个桶的数据依次取出，即可完成排序。
+     * <p>
+     * 操作步骤:
+     * 1.找出元素最大值最小值之差.
+     * 2.根据差值建立等大小的桶,将差值分成若干桶
+     * 3.每个元素进去对应区间桶
+     * 4.桶内排序,然后拿出
+     * <p>
+     * 由于计数占用空间太大,桶排序则将max大数据空间变为max/n大小.
+     *
+     * @param arr
+     * @param low
+     * @param high
+     */
+    private void bucketSort(int[] arr, int low, int high) {
+        int max = arr[0];
+        int min = arr[0];
+        int length = high + 1;
+        for (int i = 1; i < length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            } else if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+        // 最大值和最小值的差
+        int diff = max - min;
+        // 桶列表
+        List<List<Integer>> bucketList = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            bucketList.add(new ArrayList<>());
+        }
+        // 每个桶的存数区间
+        float section = (float) diff / (float) (length - 1);
+        // 数据入桶
+        for (int i = 0; i < length; i++) {
+            // 当前数除以区间得出存放桶的位置 减1后得出桶的下标
+            int num = (int) (arr[i] / section) - 1;
+            if (num < 0) {
+                num = 0;
+            }
+            bucketList.get(num).add(arr[i]);
+        }
+        // 桶内排序
+        for (int i = 0; i < bucketList.size(); i++) {
+            Collections.sort(bucketList.get(i));
+        }
+        //写入原数组
+        int index = 0;
+        for (List<Integer> arrayList : bucketList) {
+            for (int value : arrayList) {
+                arr[index] = value;
+                index++;
+            }
+        }
+    }
 }
