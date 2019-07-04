@@ -630,10 +630,8 @@ public class Sorter {
         //当前排序位置
         int location = 1;
         //桶列表
-
         ArrayList<ArrayList<Integer>> bucketList = new ArrayList<>();
         //长度为10 装入余数0-9的数据
-
         for (int i = 0; i < 10; i++) {
             bucketList.add(new ArrayList());
         }
@@ -643,14 +641,12 @@ public class Sorter {
             if (max < dd) {
                 break;
             }
-
             //数据入桶
             for (int i = 0; i < length; i++) {
                 //计算余数 放入相应的桶
                 int number = ((arr[i] / dd) % 10);
                 bucketList.get(number).add(arr[i]);
             }
-
             //写回数组
             int nn = 0;
             for (int i = 0; i < 10; i++) {
