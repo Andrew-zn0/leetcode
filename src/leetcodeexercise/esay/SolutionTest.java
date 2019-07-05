@@ -1,6 +1,10 @@
 package leetcodeexercise.esay;
 
 
+import com.sun.org.apache.regexp.internal.RE;
+
+import java.util.Arrays;
+import java.util.concurrent.ForkJoinPool;
 
 /**
  * @author Jay
@@ -199,6 +203,42 @@ class Solution13Test {
     }
 
 }
+
+/**
+ * 14.编写一个函数来查找字符串数组中的(所有)最长公共前缀。
+ * 如果不存在公共前缀，返回空字符串 ""
+ */
+class Solution14Test {
+
+    public static void main(String[] args) {
+        String s = longestCommonPrefix(new String[]{"qwer", "qw", "qwe"});
+        System.out.println(s);
+    }
+
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        String temp = "";
+        String tmp = "";
+        for (int i = 0; i < strs[0].length(); i++) {
+            tmp = strs[0].substring(0, i + 1);
+
+            for (int j = 0; j < strs.length; j++) {
+                if (!strs[j].startsWith(tmp)) {
+                    return temp;
+                }
+            }
+            temp = tmp;
+        }
+        return temp;
+    }
+}
+
+
 
 
 
