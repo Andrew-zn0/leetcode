@@ -696,6 +696,8 @@ class Solution53Test {
 
     /**
      * 算法效率太低
+     * <p>
+     * 时间复杂度: O(N3)
      *
      * @param nums
      * @return
@@ -705,7 +707,6 @@ class Solution53Test {
         int sum = 0;
         for (int j = 1; j <= nums.length; j++) {
             for (int i = 0; i <= nums.length - j; i++) {
-
                 for (int k = i; k <= nums.length - j; k++) {
                     sum += nums[k];
                 }
@@ -780,6 +781,13 @@ class Solution53Test {
 
     /**
      * 分治法
+     * <p>
+     * 即将整个数组分为三部分，左半部分、右半部分以及中间部分，
+     * 最大子序和必定存在于这三个区间之一，
+     * 递归求解三部分分别的最大子序和，最后，取三者中较大的一个即可。
+     *
+     * <p>
+     * nlog(n)
      *
      * @param nums
      * @return
@@ -799,12 +807,12 @@ class Solution53Test {
         // 走到最边界，看看最值是什么
         // 计算以 mid 结尾的最大的子数组的和
         for (int i = m; i >= l; i--) {
-            sum+=nums[i];
+            sum += nums[i];
             if (sum > leftSum) {
                 leftSum = sum;
             }
         }
-        sum =0;
+        sum = 0;
         int rightSum = Integer.MIN_VALUE;
         // 右半边不包含 nums[mid] 元素，最多可以到什么地方
         // 计算以 mid+1 开始的最大的子数组的和
