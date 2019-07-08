@@ -1,6 +1,8 @@
 package leetcodeexercise.esay;
 
 
+import org.junit.experimental.max.MaxCore;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -563,11 +565,271 @@ class Solution28Test {
         }
         return -1;
     }
-
-
 }
 
+/**
+ * 35. 给定一个排序数组和一个目标值，在数组中找到目标值，
+ * 并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+ */
+class Solution35Test {
 
+    public static void main(String[] args) {
 
+        int[] ints = {1, 2, 4, 6, 10};
+
+        int i = searchInsert(ints, 0);
+        System.out.println("插入位置：" + i);
+        Arrays.stream(ints).forEach(x -> System.out.println(x));
+    }
+
+    /**
+     * 循环遍历
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int searchInsert1(int[] nums, int target) {
+        if (nums[0] > target) {
+            return 0;
+        }
+        for (int i = 0; i < nums.length; i++) {
+
+            if (nums[i] == target) {
+                return i;
+            }
+            if (i == nums.length - 1) {
+                return nums.length;
+            }
+
+            if (nums[i] < target && nums[i + 1] > target) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 二分查找
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int searchInsert(int[] nums, int target) {
+
+        int len = nums.length;
+        if (nums[len - 1] < target) {
+            return len;
+        }
+        int l = 0;
+        int r = len - l;
+        while (l <= r) {
+            // 防止溢出 (l+r)/2
+            int mid = l + ((r - l) >>> 1);
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l;
+    }
+}
+
+/**
+ * 38.报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。
+ */
+class Solution38Test {
+    public static void main(String[] args) {
+        String s = countAndSay(20);
+        System.out.println(s);
+    }
+
+    /**
+     * 解题思路:
+     * 本题的难点在于：报数的概念理解，但是感觉像是个递推式
+     * 从4->5分析，将4个每一位拆开看（个数+数字），4=1211 => 1=11，2=12，11=21，所以5=111221
+     * 所以解题用循环，从1->n可求解出来
+     *
+     * @param n
+     * @return
+     */
+    public static String countAndSay(int n) {
+        String str = "1";
+        for (int i = 2; i <= n; i++) {
+
+            StringBuilder builder = new StringBuilder();
+            char pre = str.charAt(0);
+            int count = 1;
+            for (int j = 1; j < str.length(); j++) {
+                char c = str.charAt(j);
+                if (c == pre) {
+                    count++;
+                } else {
+                    builder.append(count).append(pre);
+                    pre = c;
+                    count = 1;
+                }
+            }
+            builder.append(count).append(pre);
+            str = builder.toString();
+        }
+        return str;
+    }
+}
+
+/**
+ * 53.给定一个整数数组 nums ，找到一个具有最大和的连续子数组
+ * （子数组最少包含一个元素），返回其最大和。
+ */
+class Solution53Test {
+    public static void main(String[] args) {
+        //int[] ints = {-2, 1};
+        int[] ints = {-2, 2, -1, 6, -2};
+        long l = System.currentTimeMillis();
+        int i = maxSubArray3(ints);
+        System.out.println("最大和：" + i + "所用时间:" + (System.currentTimeMillis() - l));
+    }
+
+    /**
+     * 算法效率太低
+     *
+     * @param nums
+     * @return
+     */
+    public static int maxSubArray1(int[] nums) {
+        int max = nums[0];
+        int sum = 0;
+        for (int j = 1; j <= nums.length; j++) {
+            for (int i = 0; i <= nums.length - j; i++) {
+
+                for (int k = i; k <= nums.length - j; k++) {
+                    sum += nums[k];
+                }
+                if (sum > max) {
+                    max = sum;
+                }
+                sum = 0;
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 动态规划
+     * <p>
+     * 算法思路:
+     * <p>
+     * 既然一个连续子数组一定要以一个数作为结尾，那么我们就将状态定义成：
+     * dp[i] 表示以 nums[i] 结尾的连续子数组的最大和。
+     * <p>
+     * 1、定义状态：dp[i] 表示以 nums[i] 结尾的连续子数组的最大和。
+     * 2、状态转移方程：dp[i] = max{num[i], dp[i - 1] + num[i]}。
+     * <p>
+     * 时间复杂度：O(N)
+     * 空间复杂度：O(N)
+     *
+     * @param nums
+     * @return
+     */
+    public static int maxSubArray2(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        }
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < len; i++) {
+            // 状态方程
+            dp[i] = Math.max(nums[i], dp[i - 1] + nums[i]);
+        }
+        System.out.println(Arrays.toString(dp));
+        int res = dp[0];
+        for (int i = 1; i < len; i++) {
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    /**
+     * 改进空间复杂度
+     * <p>
+     * 空间复杂度：O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public static int maxSubArray(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        }
+        int s = nums[0];
+        int res = nums[0];
+        for (int i = 0; i < len; i++) {
+            s = Math.max(nums[i], s + nums[i]);
+            // 每次将最大值提取
+            res = Math.max(res, s);
+        }
+        return res;
+    }
+
+    /**
+     * 分治法
+     *
+     * @param nums
+     * @return
+     */
+    public static int maxSubArray3(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        }
+        return maxSubArraySum(nums, 0, len - 1);
+    }
+
+    private static int maxCrossingSum(int[] nums, int l, int m, int r) {
+        int sum = 0;
+        int leftSum = Integer.MIN_VALUE;
+        // 左半边包含 nums[mid] 元素，最多可以到什么地方
+        // 走到最边界，看看最值是什么
+        // 计算以 mid 结尾的最大的子数组的和
+        for (int i = m; i >= l; i--) {
+            sum+=nums[i];
+            if (sum > leftSum) {
+                leftSum = sum;
+            }
+        }
+        sum =0;
+        int rightSum = Integer.MIN_VALUE;
+        // 右半边不包含 nums[mid] 元素，最多可以到什么地方
+        // 计算以 mid+1 开始的最大的子数组的和
+        for (int i = m + 1; i <= r; i++) {
+            sum += nums[i];
+            if (sum > rightSum) {
+                rightSum = sum;
+            }
+        }
+        return leftSum + rightSum;
+    }
+
+    private static int maxSubArraySum(int[] nums, int l, int r) {
+        if (l == r) {
+            return nums[1];
+        }
+        int mid = l + (r - l) / 2;
+        return max3(maxSubArraySum(nums, l, mid),
+                maxSubArraySum(nums, mid + 1, r),
+                maxCrossingSum(nums, l, mid, r));
+    }
+
+    private static int max3(int num1, int num2, int num3) {
+        return Math.max(num1, Math.max(num2, num3));
+    }
+}
 
 
