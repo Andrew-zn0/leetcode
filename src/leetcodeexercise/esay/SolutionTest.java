@@ -840,4 +840,85 @@ class Solution53Test {
     }
 }
 
+/**
+ * 58, 给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。
+ * 如果不存在最后一个单词，请返回 0
+ */
+class Solution58Test {
+    public static void main(String[] args) {
+        int i = lengthOfLastWord("");
+        System.out.println("单词长度:" + i);
+
+    }
+
+    public static int lengthOfLastWord(String s) {
+
+        try {
+            String[] split = s.split(" ");
+            return split[split.length - 1].length();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+}
+
+/**
+ * 66. 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+ *   这个整数不会以零开头!
+ */
+class Solution66Test {
+    public static void main(String[] args) {
+        int[] ints = {0,0,9,9};
+        int[] ints1 = plusOne(ints);
+        Arrays.stream(ints1).forEach(System.out::println);
+    }
+
+    /**
+     * 该解法在数据长度很大的情况下会造成溢出
+     *
+     * @param digits
+     * @return
+     */
+    public static int[] plusOne1(int[] digits) {
+        boolean flag = false;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < digits.length; i++) {
+            if (digits[i] != 0 && !flag) {
+                flag = true;
+            }
+            if (flag) {
+                sb.append(digits[i]);
+            }
+        }
+        Long integer;
+        if ("".equals(sb.toString())) {
+            integer = 1L;
+        } else {
+            integer = Long.valueOf(sb.toString()) + 1;
+        }
+        String s = String.valueOf(integer);
+        int[] ints = new int[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            ints[i] = Integer.valueOf(s.charAt(i) + "");
+        }
+        return ints;
+    }
+
+    public static int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+            digits[i] = 0;
+        }
+        int[] res = new int[digits.length + 1];
+        res[0] = 1;
+        return res;
+    }
+
+}
+
+
+
 
