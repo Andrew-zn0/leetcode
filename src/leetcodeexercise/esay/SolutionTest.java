@@ -783,7 +783,7 @@ class Solution53Test {
      * 即将整个数组分为三部分，左半部分、右半部分以及中间部分，
      * 最大子序和必定存在于这三个区间之一，
      * 递归求解三部分分别的最大子序和，最后，取三者中较大的一个即可。
-     *
+     * <p>
      * <p>
      * nlog(n)
      *
@@ -1015,10 +1015,10 @@ class Solution69Test {
      * @return
      */
     private static int mySqrt1(int x) {
-        for (int i = 0; true; i++) {
+        for (long i = 0; true; i++) {
 
             if (x < i * i) {
-                return i - 1;
+                return (int) i - 1;
             }
         }
     }
@@ -1032,7 +1032,7 @@ class Solution69Test {
      * @param x
      * @return
      */
-    private static int mySqrt(int x) {
+    private static int mySqrt2(int x) {
         if (x == 0) {
             return 0;
         }
@@ -1051,6 +1051,23 @@ class Solution69Test {
             }
         }
         return (int) left;
+    }
+
+    /**
+     * 牛顿法
+     * <p>
+     * 在迭代过程中，以直线代替曲线，用一阶泰勒展式（即在当前点的切线）代替原曲线，
+     * 求直线与 xx轴的交点，重复这个过程直到收敛。
+     *
+     * @param a
+     * @return
+     */
+    private static int mySqrt(int a) {
+        long x = a;
+        while (x * x > a) {
+            x = (x + a / x) / 2;
+        }
+        return (int) x;
     }
 }
 
