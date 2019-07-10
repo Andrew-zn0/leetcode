@@ -1,13 +1,11 @@
 package leetcodeexercise.esay;
 
 
-import org.junit.experimental.max.MaxCore;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
-import java.util.concurrent.ForkJoinPool;
+
 
 /**
  * @author Jay
@@ -22,7 +20,7 @@ public class SolutionTest {
 /**
  * 7. 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转
  */
-class Solution7Test {
+class _Solution7Test {
     public void test() {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
@@ -864,11 +862,11 @@ class Solution58Test {
 
 /**
  * 66. 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
- *   这个整数不会以零开头!
+ * 这个整数不会以零开头!
  */
 class Solution66Test {
     public static void main(String[] args) {
-        int[] ints = {0,0,9,9};
+        int[] ints = {0, 0, 9, 9};
         int[] ints1 = plusOne(ints);
         Arrays.stream(ints1).forEach(System.out::println);
     }
@@ -916,9 +914,144 @@ class Solution66Test {
         res[0] = 1;
         return res;
     }
+}
+
+/**
+ * 67. 给定两个二进制字符串，返回他们的和（用二进制表示）。
+ */
+class Solution67Test {
+    public static void main(String[] args) {
+        String s = addBinary("10", "11");
+        System.out.println(s);
+        //        int power = power(4, 3);
+        //        System.out.println(power);
+    }
+
+    /**
+     * 解题思路:
+     * <p>
+     * 整体思路是将两个字符串较短的用0补齐，使得两个字符串长度一致，
+     * 然后从末尾进行遍历计算，得到最终结果。
+     * <p>
+     * 但由于字符串操作原因，不确定最后的结果是否会多出一位进位，
+     * 所以会有2种处理方式：
+     * <p>
+     * 1.在进行计算时直接拼接字符串，会得到一个反向字符，需要最后再进行翻转
+     * 2.按照位置给结果字符赋值，最后如果有进位，则在前方进行字符串拼接添加进位
+     * <p>
+     * 时间复杂度:
+     * <p>
+     * O(n)
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String addBinary(String a, String b) {
+        //        int i = Integer.parseInt(a, 2);
+        //        int i1 = Integer.parseInt(b, 2);
+        //
+        //        return  Integer.toBinaryString(i+i1);
+
+        StringBuilder ans = new StringBuilder();
+        int ca = 0;
+        for (int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0; i--, j--) {
+            int sum = ca;
+            // 判断j>=0的含义是有可能两个数字长度不一致，
+            // 如果j<0的话则将其当做0来处理，否则获取其值，也就是 b.charAt(j) - '0'
+            sum += i >= 0 ? a.charAt(i) - '0' : 0;
+            sum += j >= 0 ? b.charAt(j) - '0' : 0;
+            // sum%2是在做二进制取模运算，比如sum=2，这时候将sum%2=0放入结果集中
+            ans.append(sum % 2);
+            // 这里是计算进位，比如sum=2，ca = 1，ca表示进位的意思，满2进1
+            ca = sum / 2;
+        }
+        // 这一步表示是不是最后还有进位，比如1+1 = 10，10前面的1就是最后留存的进位，需要将其放进去
+        ans.append(ca == 1 ? ca : "");
+        return ans.reverse().toString();
+
+    }
+
+    /**
+     * 递归实现
+     *
+     * @param x
+     * @param n
+     * @return
+     */
+    private static int power(int x, int n) {
+        int y;
+        if (n == 0) {
+            y = 1;
+        } else {
+            y = power(x, n / 2);
+            y = y * y;
+            if (n % 2 == 1) {
+                y = y * x;
+            }
+        }
+        return y;
+    }
 
 }
 
+/**
+ * 69 .实现 int sqrt(int x) 函数。
+ * 计算并返回 x 的平方根，其中 x 是非负整数。
+ * 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+ */
+class Solution69Test {
 
+    public static void main(String[] args) {
+        int i = mySqrt(4);
+        System.out.println("平方根为:" + i);
+
+    }
+
+    /**
+     * /极限情况会越界
+     *
+     * @param x
+     * @return
+     */
+    private static int mySqrt1(int x) {
+        for (int i = 0; true; i++) {
+
+            if (x < i * i) {
+                return i - 1;
+            }
+        }
+    }
+
+    /**
+     * 二分查找法
+     * <p>
+     * 时间复杂度：O(\log N)O(logN)，二分法的时间复杂度是对数级别的。
+     * 空间复杂度：O(1)O(1)，使用了常数个数的辅助空间用于存储和比较。
+     *
+     * @param x
+     * @return
+     */
+    private static int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
+        // 注意：针对特殊测试用例，例如 2147395599
+        // 要把搜索的范围设置成长整型
+        long left = 1;
+        long right = x / 2;
+        while (left < right) {
+            // 注意：这里一定取右中位数，如果取左中位数，代码可能会进入死循环
+            long mid = left + (right - left + 1) / 2;
+            long square = mid * mid;
+            if (square > x) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        return (int) left;
+    }
+}
 
 
