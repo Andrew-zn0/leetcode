@@ -1141,6 +1141,7 @@ class Solution70Test {
      */
     public static int climbStairs(int n) {
         if (n == 1) {
+            
             return 1;
         }
 
