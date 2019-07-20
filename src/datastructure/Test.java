@@ -14,7 +14,6 @@ public class Test {
         for (int num:c){
             System.out.print(num);
         }
-
     }
 
 
