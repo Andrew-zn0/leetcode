@@ -72,7 +72,6 @@ public class MyArrayList implements MyList {
 
     @Override
     public void insert(int i, Object e) throws OutOfBoundaryException {
-
         if (i < 0 || i > size) {
             throw new OutOfBoundaryException("插入序号越界");
         }
@@ -87,7 +86,6 @@ public class MyArrayList implements MyList {
     }
 
     private void expandSpace() {
-
         Object[] a = new Object[elements.length * 2];
         for (int i = 0; i < elements.length; i++) {
             a[i] = elements[i];
