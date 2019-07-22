@@ -1,10 +1,12 @@
 package leetcodeexercise.esay;
 
 
+import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ForkJoinPool;
 
 
 /**
@@ -1156,3 +1158,176 @@ class Solution70Test {
     }
 }
 
+/**
+ * 83 .删除排序链表中的重复元素
+ */
+class Solution83Test {
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
+
+    public static void main(String[] args) {
+        ListNode v1 = new ListNode(1);
+        ListNode v2 = new ListNode(2);
+        ListNode v3 = new ListNode(3);
+        ListNode v4 = new ListNode(3);
+        v3.next = v4;
+        v2.next = v3;
+        v1.next = v2;
+
+        ListNode listNode = deleteDuplicates(v1);
+        System.out.println("----------");
+    }
+
+
+    public static ListNode deleteDuplicates(ListNode head) {
+        ListNode m = head;
+        while (m != null && m.next != null) {
+            if (m.val == m.next.val) {
+                m.next = m.next.next;
+            } else {
+                m = m.next;
+            }
+        }
+        return head;
+    }
+}
+
+/**
+ * 88 .合并两个有序数组
+ */
+class Solution88Test {
+
+    public static void main(String[] args) {
+        int[] a = {1, 3, 4, 0, 0};
+        int[] b = {2, 5};
+        merge(a, 3, b, 2);
+        System.out.println(Arrays.toString(a));
+    }
+
+    /**
+     * 从头到尾
+     *
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public static void merge1(int[] nums1, int m, int[] nums2, int n) {
+        int[] nums3 = new int[m];
+        // 只需要把 nums1 的有效个元素复制到 nums3 就可以了
+        System.arraycopy(nums1, 0, nums3, 0, m);
+        int i = 0;
+        int j = 0;
+        int length = m + n;
+        // 从前向后归并，比较 nums3 和 nums2 前端的元素哪个小，谁小谁出列，覆盖 nums1
+        for (int k = 0; k < length; k++) {
+            // 注意：要把 nums3 和 nums2 归并完成的逻辑写在前面，否则会出现数组下标越界异常
+            if (i == m) {
+                nums1[k] = nums2[j];
+                j++;
+            } else if (j == n) {
+                nums1[k] = nums3[i];
+                i++;
+            } else if (nums3[i] < nums2[j]) {
+                nums1[k] = nums3[i];
+                i++;
+            } else {
+                nums1[k] = nums2[j];
+                j++;
+            }
+        }
+    }
+
+    /**
+     * 从尾到头
+     * <p>
+     * 省空间
+     *
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int len = m + n;
+        int i = m - 1;
+        int j = n - 1;
+        // 从后向前归并，比较 nums1 和 nums2 末尾的元素哪个大，谁大谁出列，覆盖 nums1
+        for (int k = len - 1; k >= 0; k--) {
+            if (i == -1) {
+                // 注意：同样要把 nums1 和 nums2 归并完成的逻辑写在前面，否则会出现数组下标越界异常
+                // 此时 j 位于数组 nums2 的末尾索引位置，还未看的数组 nums2 的长度为 j + 1
+                // 复制完 break 掉即可
+                System.arraycopy(nums2, 0, nums1, 0, j + 1);
+                break;
+            } else if (j == -1) {
+                // 注意：这里直接 break 掉就可以了
+                // 因为 nums2 遍历完成以后，nums1 剩下的元素虽然还没有看，但一定是排定以后的那个样子
+                break;
+            } else if (nums1[i] >= nums2[j]) {
+                // 谁大谁出列
+                nums1[k] = nums1[i];
+                i--;
+            } else {
+                assert nums1[i] < nums2[j];
+                nums1[k] = nums2[j];
+                j--;
+            }
+        }
+    }
+}
+
+/**
+ * 100.相同的树
+ */
+class Solution100Test {
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    public static void main(String[] args) {
+        TreeNode t1 = new TreeNode(1);
+        TreeNode t4 = new TreeNode(1);
+        TreeNode t2 = new TreeNode(2);
+        TreeNode t3 = new TreeNode(3);
+        t1.left = t2;
+        t1.right = t3;
+        t4.left = t3;
+        System.out.println(isSameTree(t1, t4));
+    }
+
+    /**
+     * 递归
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public static boolean isSameTree(TreeNode p, TreeNode q) {
+
+        if (p == null && q == null) {
+            return true;
+        }
+        if (q == null || p == null) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        } else {
+            return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        }
+    }
+}
