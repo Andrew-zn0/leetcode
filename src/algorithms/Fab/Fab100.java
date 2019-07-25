@@ -79,5 +79,4 @@ public class Fab100 {
             return arr[(int) (i - 1)];
         }
     }
-
 }
