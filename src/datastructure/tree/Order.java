@@ -61,6 +61,7 @@ public class Order {
     public Iterator levelOrder() {
         LinkedList list = new MyDoubleNodeLinkedList();
         levelOrderTraverse(this.root, list);
+        
         return list.elements();
     }
 
