@@ -13,14 +13,14 @@ public class Solution122Test {
     @Test
     public void test() {
 
-        int[] arr = {1, 7, 1, 9,9};
-        System.out.println(maxProfit(arr));
+        int[] arr = {1, 7, 1, 9, 9};
+        // System.out.println(maxProfit(arr));
 
-
+        System.out.println(max(10));
     }
 
     public int maxProfit(int[] prices) {
-        if(prices.length==0){
+        if (prices.length == 0) {
             return 0;
         }
         int min = prices[0];
@@ -36,10 +36,49 @@ public class Solution122Test {
             if (prices[i] < min) {
                 min = prices[i];
             }
-            if (i == prices.length-1 && prices[i] >= prices[i - 1]) {
+            if (i == prices.length - 1 && prices[i] >= prices[i - 1]) {
                 sum += (prices[i] - min);
             }
         }
         return sum;
     }
+
+    /**
+     * 迭代
+     *
+     * @param num
+     * @return
+     */
+    public int max(int num) {
+
+        for (int i = 0; i < 10000; i++) {
+            int sum = i;
+            int b = i;
+
+            while (b >= 4) {
+                int a = b % 4;
+                b = b / 4;
+                sum += b;
+                b = a + b;
+                if (sum == num) {
+                    return i;
+                }
+
+            }
+        }
+        return 0;
+
+    }
+
+    /**
+     * @param num
+     * @return
+     */
+    public int max1(int num) {
+
+        return num - num / 4;
+
+    }
+
+
 }
