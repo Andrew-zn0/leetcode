@@ -26,7 +26,6 @@ public class Solution198Test {
      *
      * f(k) = max(f(k – 2) + Ak, f(k – 1))
      *
-     * 
      *
      * @param nums
      * @return
@@ -38,7 +37,6 @@ public class Solution198Test {
             int temp = currMax;
             // 状态转移方程
             currMax = Math.max(prevMax+num,currMax);
-
             prevMax =temp;
         }
         return currMax;
