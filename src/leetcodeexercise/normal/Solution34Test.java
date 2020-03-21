@@ -64,7 +64,7 @@ public class Solution34Test {
     public int[] searchRange1(int[] nums, int target) {
         // 初始化
         int[] targetRange = {-1, -1};
-
+        // 左侧边界
         int leftIdx = extremeInsertionIndex(nums, target, true);
 
         if (leftIdx == nums.length || nums[leftIdx] != target) {
@@ -72,6 +72,7 @@ public class Solution34Test {
         }
 
         targetRange[0] = leftIdx;
+        // 右侧边界
         targetRange[1] = extremeInsertionIndex(nums, target, false) - 1;
 
         return targetRange;
@@ -90,6 +91,8 @@ public class Solution34Test {
 
         while (lo < hi) {
             int mid = (lo + hi) / 2;
+            // 若相等，则寻找左侧边界的话 右侧边界应该收缩，也就是hi变动，所以标记为true
+            // 若是寻找右侧边界，在相等情况下左侧边界收缩，即lo=mid+1
             if (nums[mid] > target || (left && target == nums[mid])) {
                 hi = mid;
             } else {
