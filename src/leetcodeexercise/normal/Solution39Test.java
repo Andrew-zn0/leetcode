@@ -23,6 +23,8 @@ public class Solution39Test {
 
     /**
      * 递归回溯
+     * <p>
+     * 根节点为目标值，每个子节点开始减，直到小于0，开始剪枝。
      *
      * @param candidates
      * @param target
@@ -33,7 +35,7 @@ public class Solution39Test {
         List<List<Integer>> res = new ArrayList<>();
         int len = candidates.length;
 
-        // 排序是为了提前终止搜索
+        // 排序是为了提前终止搜索，即若是小数不满足，则后边更大的数也不满足
         Arrays.sort(candidates);
 
         dfs(candidates, len, target, 0, new ArrayDeque<>(), res);
@@ -63,7 +65,10 @@ public class Solution39Test {
 
             path.addLast(candidates[i]);
 
+            // begin 是为了去重，不会搜索比自己小的元素，把当前节点传入下级，作为开始节点
             dfs(candidates, len, residue - candidates[i], i, path, res);
+
+            // path
             path.removeLast();
 
         }
