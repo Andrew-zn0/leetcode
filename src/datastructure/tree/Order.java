@@ -111,7 +111,7 @@ public class Order {
         }
         Queue q = new QueueArray();
         // 根节点入队
-        q.enqueue(q);
+        q.enqueue(root);
         while (!q.isEmpty()) {
             // 取出队首节点p并访问
             BinTreeNode p = (BinTreeNode) q.dequeue();
