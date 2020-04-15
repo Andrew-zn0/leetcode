@@ -9,13 +9,10 @@ import java.util.Queue;
 
 /**
  * @author Jay
- * @description 给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。
- * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
- * <p>
- * 初始状态下，所有 next 指针都被设置为 NULL。
- * @date Created in 2020/4/15 10:48 上午
+ * @description 填充每个节点的下一个右侧节点指针 II
+ * @date Created in 2020/4/15 9:41 下午
  */
-public class Solution116Test {
+public class Solution117Test {
 
     @Test
     public void test() {
@@ -31,12 +28,13 @@ public class Solution116Test {
     }
 
     /**
-     * 迭代，层级遍历，然后将每层进行链接
+     * 迭代层级遍历
      *
      * @param root
      * @return
      */
     public TreeNode connect(TreeNode root) {
+
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         List<List<TreeNode>> levels = new ArrayList<>();
         if (root == null) {
@@ -45,12 +43,15 @@ public class Solution116Test {
         queue.add(root);
         int level = 0;
         while (!queue.isEmpty()) {
-            levels.add(new ArrayList<TreeNode>());
+
+            levels.add(new ArrayList<>());
             int size = queue.size();
+
             for (int i = 0; i < size; ++i) {
+
                 TreeNode node = queue.remove();
+
                 levels.get(level).add(node);
-                // 将同层数据组成链表
                 if (i > 0) {
                     levels.get(level).get(i - 1).next = levels.get(level).get(i);
                 }
@@ -62,45 +63,53 @@ public class Solution116Test {
                 }
             }
             level++;
+
         }
         return root;
     }
 
     /**
-     * 使用已建立的 next 指针
+     * 递归
      *
      * @param root
      * @return
      */
     public TreeNode connect1(TreeNode root) {
-
-        if (root == null) {
+        if (root == null || (root.right == null && root.left == null)) {
             return root;
         }
-        TreeNode leftmost = root;
-
-        while (leftmost.left != null) {
-
-            TreeNode head = leftmost;
-
-            while (head != null) {
-
-                // 同一节点右节点链接左节点
-                head.left.next = head.right;
-
-
-                if (head.next != null) {
-                    // 不是同一节点，则相邻节点左节点链接右节点
-                    head.right.next = head.next.left;
-                }
-
-                head = head.next;
-            }
-
-            leftmost = leftmost.left;
-
+        if (root.left != null && root.right != null) {
+            root.left.next = root.right;
+            root.right.next = getNextNoNullChild(root);
         }
-        return root;
+        if (root.left == null) {
+            root.right.next = getNextNoNullChild(root);
+        }
+        if (root.right == null) {
+            root.left.next = getNextNoNullChild(root);
+        }
 
+        // 这里要注意：先递归右子树，否则右子树根节点next关系没建立好，左子树到右子树子节点无法正确挂载
+        root.right = connect(root.right);
+        root.left = connect(root.left);
+
+        return root;
     }
+
+    /**
+     * 一路向右找到有子节点的根节点
+     */
+    private static TreeNode getNextNoNullChild(TreeNode root) {
+        while (root.next != null) {
+            if (root.next.left != null) {
+                return root.next.left;
+            }
+            if (root.next.right != null) {
+                return root.next.right;
+            }
+            root = root.next;
+        }
+        return null;
+    }
+
 }
