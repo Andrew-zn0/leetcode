@@ -89,11 +89,12 @@ public class Solution94Test {
         Stack<TreeNode> s = new Stack<>();
         while (p != null || !s.isEmpty()) {
             while (p != null) {
-
+                // 一直到最左叶子节点
                 s.push(p);
                 p = p.left;
             }
             if (!s.isEmpty()) {
+                // 取出元素
                 p = s.pop();
                 list.add(p.val);
                 p = p.right;
