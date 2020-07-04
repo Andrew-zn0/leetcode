@@ -15,7 +15,11 @@ public class Solution43Test {
     public void test() {
 
 
-        System.out.println(multiply("123", "456"));
+        // System.out.println(multiply("123", "456"));
+
+        char c = 'A';
+        c = (char) (c ^ 32);
+        System.out.println(c);
 
     }
 
