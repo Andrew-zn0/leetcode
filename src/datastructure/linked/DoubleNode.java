@@ -45,4 +45,12 @@ public class DoubleNode implements Node {
     public void setData(Object data) {
         element = data;
     }
+
+    public static void main(String[] args) {
+
+
+        int i = "[][]".indexOf("]");
+        System.out.println(i);
+    }
+
 }

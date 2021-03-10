@@ -9,7 +9,7 @@ import org.junit.Test;
  */
 public class Solution124Test {
 
-    int maxSum = Integer.MAX_VALUE;
+    int maxSum = Integer.MIN_VALUE;
 
     @Test
     public void test() {
