@@ -212,13 +212,15 @@ public class MedianOfTwoSortedArrays {
 
         if (k == 1) return Math.min(nums1[start1], nums2[start2]);
 
+        // K/2 坐标
         int i = start1 + Math.min(len1, k / 2) - 1;
         int j = start2 + Math.min(len2, k / 2) - 1;
 
+        // 俩种情况处理
         if (nums1[i] > nums2[j]) {
             return getKth(nums1, start1, end1, nums2, j + 1, end2, k - (j - start2 + 1));
         }
-        
+
         else {
             return getKth(nums1, i + 1, end1, nums2, start2, end2, k - (i - start1 + 1));
         }
