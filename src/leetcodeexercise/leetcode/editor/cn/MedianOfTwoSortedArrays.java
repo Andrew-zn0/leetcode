@@ -218,6 +218,7 @@ public class MedianOfTwoSortedArrays {
         if (nums1[i] > nums2[j]) {
             return getKth(nums1, start1, end1, nums2, j + 1, end2, k - (j - start2 + 1));
         }
+        
         else {
             return getKth(nums1, i + 1, end1, nums2, start2, end2, k - (i - start1 + 1));
         }
