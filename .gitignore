@@ -23,3 +23,5 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/src/leetcodeexercise/leetcode/editor/cn/translation.json
+/src/leetcodeexercise/leetcode/editor/cn/all.json
