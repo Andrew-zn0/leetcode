@@ -72,6 +72,7 @@ public class RegularExpressionMatching {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean isMatch(String s, String p) {
+
             char[] cs = s.toCharArray();
             char[] cp = p.toCharArray();
 
